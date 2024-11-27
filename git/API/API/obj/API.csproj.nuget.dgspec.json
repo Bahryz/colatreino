@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\phbah\\OneDrive\\Desktop\\Pasta para a prova\\git\\2024-desenvolvimento-software-visual-quinta\\API\\API\\API.csproj": {}
+    "C:\\Users\\phbah\\OneDrive\\Desktop\\GITPRAPROVA\\git\\API\\API\\API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\phbah\\OneDrive\\Desktop\\Pasta para a prova\\git\\2024-desenvolvimento-software-visual-quinta\\API\\API\\API.csproj": {
+    "C:\\Users\\phbah\\OneDrive\\Desktop\\GITPRAPROVA\\git\\API\\API\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\phbah\\OneDrive\\Desktop\\Pasta para a prova\\git\\2024-desenvolvimento-software-visual-quinta\\API\\API\\API.csproj",
+        "projectUniqueName": "C:\\Users\\phbah\\OneDrive\\Desktop\\GITPRAPROVA\\git\\API\\API\\API.csproj",
         "projectName": "API",
-        "projectPath": "C:\\Users\\phbah\\OneDrive\\Desktop\\Pasta para a prova\\git\\2024-desenvolvimento-software-visual-quinta\\API\\API\\API.csproj",
+        "projectPath": "C:\\Users\\phbah\\OneDrive\\Desktop\\GITPRAPROVA\\git\\API\\API\\API.csproj",
         "packagesPath": "C:\\Users\\phbah\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\phbah\\OneDrive\\Desktop\\Pasta para a prova\\git\\2024-desenvolvimento-software-visual-quinta\\API\\API\\obj\\",
+        "outputPath": "C:\\Users\\phbah\\OneDrive\\Desktop\\GITPRAPROVA\\git\\API\\API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\phbah\\AppData\\Roaming\\NuGet\\NuGet.Config"
