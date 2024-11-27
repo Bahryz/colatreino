@@ -1,0 +1,80 @@
+
+Cola de Prova: Resumo para Lógica do Front-End
+1. Estrutura Geral do Projeto
+Framework: React
+Gerenciador de Roteamento: React Router
+Bibliotecas Adicionais:
+axios: requisições HTTP.
+CSS Modules: estilos por componente.
+2. Funcionalidades Principais
+Cadastrar Produto
+Estados:
+Armazena os dados do formulário (nome, descrição, preço, quantidade, categoriaId).
+Carrega as categorias via fetch na API (/api/categoria/listar).
+Envio: Envia os dados do formulário usando fetch (método POST) para o endpoint /api/produto/cadastrar.
+Listar Produtos
+Estados: Armazena a lista de produtos (useState).
+Requisição:
+Carrega produtos usando fetch (método GET) no endpoint /api/produto/listar.
+Exibe os produtos em uma tabela.
+Deleção:
+Função deletar chama a API (axios.delete) no endpoint /api/produto/deletar/{id}.
+Atualiza a lista após deleção.
+Alterar Produto
+URL Dinâmica: Recebe o id do produto via useParams.
+Carregamento: Carrega o produto atual (axios.get) e preenche os campos do formulário.
+Categorias: Carrega a lista de categorias associadas.
+Envio: Envia os dados atualizados via axios.put para /api/produto/alterar/{id}.
+3. Modelos e Interfaces
+Produto
+typescript
+Copiar código
+export interface Produto {
+  id?: string;
+  nome: string;
+  descricao: string;
+  preco: number;
+  quantidade: number;
+  criadoEm?: string;
+  categoriaId: number;
+  categoria?: Categoria;
+}
+Categoria
+typescript
+Copiar código
+export interface Categoria {
+  categoriaId?: number;
+  nome: string;
+  criadoEm?: string;
+}
+4. Componentes Importantes
+App.tsx:
+Configura as rotas (BrowserRouter, Routes, Route).
+Navegação principal com Link.
+Estilos:
+CSS Modules (.module.css) aplicados individualmente nos componentes.
+Personalização com hover, focus, e media queries.
+5. Requisições HTTP
+Fetch Exemplo: Carregar Categorias
+typescript
+Copiar código
+fetch("http://localhost:5117/api/categoria/listar")
+  .then((resposta) => resposta.json())
+  .then((categorias) => setCategorias(categorias));
+Axios Exemplo: Alterar Produto
+typescript
+Copiar código
+axios.put(`http://localhost:5117/api/produto/alterar/${id}`, produto)
+  .then((resposta) => console.log(resposta.data));
+6. Roteamento
+Home: "/"
+Listar Produtos: "/pages/produto/listar"
+Cadastrar Produto: "/pages/produto/cadastrar"
+Consultar CEP: "/pages/endereco/consultar"
+Alterar Produto: "/pages/produto/alterar/:id"
+7. Estilização
+CSS Modules: Facilita escopo isolado.
+Tabela (Exemplo):
+Alternância de cores para linhas: nth-child(even).
+Hover: destaca a linha ao passar o mouse.
+Use esta cola como guia rápido! Se precisar de mais detalhes, posso expandir.

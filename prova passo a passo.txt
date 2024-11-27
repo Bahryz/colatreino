@@ -1,0 +1,222 @@
+Passo 1: Configuração do Ambiente
+Verificar pré-requisitos:
+
+Certifique-se de que o Node.js e o npm/yarn estejam instalados.
+Instale o Create React App globalmente (opcional):
+bash
+Copiar código
+npm install -g create-react-app
+Criar o projeto React com TypeScript:
+
+bash
+Copiar código
+npx create-react-app my-app --template typescript
+cd my-app
+Passo 2: Limpar a Estrutura Inicial
+Remover arquivos desnecessários em src:
+
+Exclua:
+no public só manter o index.html
+App.css, App.test.tsx, logo.svg, reportWebVitals.ts, setupTests.ts
+Atualizar o App.tsx: Substitua o conteúdo para refletir a base do projeto:
+
+tsx
+Copiar código
+import React from "react";
+
+function App() {
+    return (
+        <div>
+            <h1>Bem-vindo ao frontend React</h1>
+        </div>
+    );
+}
+
+export default App;
+Atualizar o index.tsx: Garanta que ele está renderizando o componente principal:
+
+tsx
+Copiar código
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+
+ReactDOM.render(
+    <React.StrictMode>
+        <App />
+    </React.StrictMode>,
+    document.getElementById("root")
+);
+Passo 3: Adicionar Rotas e Navegação
+Instalar o React Router:
+
+bash
+Copiar código
+npm install react-router-dom
+npm install @types/react-router-dom
+Configurar rotas em App.tsx:
+
+tsx
+Copiar código
+import React from "react";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import ListaProdutos from "./components/ListaProdutos";
+import CadastroProduto from "./components/CadastroProduto";
+
+function App() {
+    return (
+        <BrowserRouter>
+            <nav>
+                <ul>
+                    <li><Link to="/">Lista de Produtos</Link></li>
+                    <li><Link to="/cadastro">Cadastrar Produto</Link></li>
+                </ul>
+            </nav>
+            <Routes>
+                <Route path="/" element={<ListaProdutos />} />
+                <Route path="/cadastro" element={<CadastroProduto />} />
+            </Routes>
+        </BrowserRouter>
+    );
+}
+
+export default App;
+Adicionar estilização (opcional): No arquivo index.css ou App.css, adicione estilos para melhorar a navegação:
+
+css
+Copiar código
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+nav ul li {
+    display: inline;
+}
+
+a {
+    text-decoration: none;
+    color: blue;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+Passo 4: Criar os Componentes
+Criar pasta para componentes:
+
+bash
+Copiar código
+mkdir src/components
+Componente ListaProdutos:
+
+tsx
+Copiar código
+import React, { useEffect, useState } from "react";
+import { Produto } from "../interfaces/Produto";
+
+const ListaProdutos: React.FC = () => {
+    const [produtos, setProdutos] = useState<Produto[]>([]);
+
+    useEffect(() => {
+        fetch("http://localhost:5000/api/produtos")
+            .then((response) => response.json())
+            .then((data) => setProdutos(data))
+            .catch((error) => console.error("Erro:", error));
+    }, []);
+
+    return (
+        <div>
+            <h1>Produtos Disponíveis</h1>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th>Preço</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {produtos.map((produto) => (
+                        <tr key={produto.id}>
+                            <td>{produto.id}</td>
+                            <td>{produto.nome}</td>
+                            <td>{produto.descricao}</td>
+                            <td>{produto.preco}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    );
+};
+
+export default ListaProdutos;
+Componente CadastroProduto:
+
+tsx
+Copiar código
+import React, { useState } from "react";
+
+const CadastroProduto: React.FC = () => {
+    const [nome, setNome] = useState("");
+    const [descricao, setDescricao] = useState("");
+    const [preco, setPreco] = useState(0);
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        fetch("http://localhost:5000/api/produtos", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ nome, descricao, preco }),
+        })
+            .then((response) => response.json())
+            .then(() => {
+                setNome("");
+                setDescricao("");
+                setPreco(0);
+            })
+            .catch((error) => console.error("Erro:", error));
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <label>
+                Nome:
+                <input type="text" value={nome} onChange={(e) => setNome(e.target.value)} />
+            </label>
+            <label>
+                Descrição:
+                <input type="text" value={descricao} onChange={(e) => setDescricao(e.target.value)} />
+            </label>
+            <label>
+                Preço:
+                <input type="number" value={preco} onChange={(e) => setPreco(Number(e.target.value))} />
+            </label>
+            <button type="submit">Cadastrar Produto</button>
+        </form>
+    );
+};
+
+export default CadastroProduto;
+Passo 5: Integração com CORS
+Garantir que o backend permita CORS: No Startup.cs (ou equivalente), habilite CORS:
+
+csharp
+Copiar código
+app.UseCors(builder => 
+    builder.AllowAnyOrigin()
+           .AllowAnyMethod()
+           .AllowAnyHeader());
+Testar integração:
+
+Inicie o backend.
+Execute o frontend com:
+bash
+Copiar código
+npm start
+Acesse as rotas e teste a comunicação.

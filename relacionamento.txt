@@ -1,0 +1,157 @@
+Relacionamentos no Entity Framework Core
+1. Um-para-Um (One-to-One)
+Um registro de uma tabela está associado a exatamente um registro de outra tabela.
+
+Modelo:
+
+csharp
+Copiar código
+public class Cliente
+{
+    public int ClienteId { get; set; }
+    public string Nome { get; set; }
+    public Endereco Endereco { get; set; } // Propriedade de navegação
+}
+
+public class Endereco
+{
+    public int EnderecoId { get; set; }
+    public string Rua { get; set; }
+    public int ClienteId { get; set; } // Chave estrangeira
+    public Cliente Cliente { get; set; } // Propriedade de navegação
+}
+Configuração no OnModelCreating:
+
+csharp
+Copiar código
+modelBuilder.Entity<Cliente>()
+    .HasOne(c => c.Endereco)
+    .WithOne(e => e.Cliente)
+    .HasForeignKey<Endereco>(e => e.ClienteId);
+2. Um-para-Muitos (One-to-Many)
+Um registro de uma tabela está associado a vários registros de outra tabela.
+
+Modelo:
+
+csharp
+Copiar código
+public class Categoria
+{
+    public int CategoriaId { get; set; }
+    public string Nome { get; set; }
+    public List<Produto> Produtos { get; set; } = new List<Produto>();
+}
+
+public class Produto
+{
+    public int ProdutoId { get; set; }
+    public string Nome { get; set; }
+    public int CategoriaId { get; set; } // Chave estrangeira
+    public Categoria Categoria { get; set; } // Propriedade de navegação
+}
+Configuração no OnModelCreating:
+
+csharp
+Copiar código
+modelBuilder.Entity<Produto>()
+    .HasOne(p => p.Categoria)
+    .WithMany(c => c.Produtos)
+    .HasForeignKey(p => p.CategoriaId);
+3. Muitos-para-Muitos (Many-to-Many)
+Registros de uma tabela estão associados a múltiplos registros de outra tabela, e vice-versa.
+
+Modelo (Com tabela de junção explícita):
+
+csharp
+Copiar código
+public class Aluno
+{
+    public int AlunoId { get; set; }
+    public string Nome { get; set; }
+    public List<AlunoCurso> AlunoCursos { get; set; }
+}
+
+public class Curso
+{
+    public int CursoId { get; set; }
+    public string Titulo { get; set; }
+    public List<AlunoCurso> AlunoCursos { get; set; }
+}
+
+public class AlunoCurso
+{
+    public int AlunoId { get; set; }
+    public Aluno Aluno { get; set; }
+
+    public int CursoId { get; set; }
+    public Curso Curso { get; set; }
+}
+Configuração no OnModelCreating:
+
+csharp
+Copiar código
+modelBuilder.Entity<AlunoCurso>()
+    .HasKey(ac => new { ac.AlunoId, ac.CursoId }); // Chave composta
+
+modelBuilder.Entity<AlunoCurso>()
+    .HasOne(ac => ac.Aluno)
+    .WithMany(a => a.AlunoCursos)
+    .HasForeignKey(ac => ac.AlunoId);
+
+modelBuilder.Entity<AlunoCurso>()
+    .HasOne(ac => ac.Curso)
+    .WithMany(c => c.AlunoCursos)
+    .HasForeignKey(ac => ac.CursoId);
+Modelo (Com convenções automáticas do EF Core): Desde o EF Core 5.0, tabelas de junção são criadas automaticamente:
+
+csharp
+Copiar código
+public class Aluno
+{
+    public int AlunoId { get; set; }
+    public string Nome { get; set; }
+    public List<Curso> Cursos { get; set; } = new List<Curso>();
+}
+
+public class Curso
+{
+    public int CursoId { get; set; }
+    public string Titulo { get; set; }
+    public List<Aluno> Alunos { get; set; } = new List<Aluno>();
+}
+4. Relacionamento Auto-referenciado (Self-Referencing)
+Uma entidade está relacionada a si mesma, como em hierarquias.
+
+Modelo:
+
+csharp
+Copiar código
+public class Categoria
+{
+    public int CategoriaId { get; set; }
+    public string Nome { get; set; }
+    public int? CategoriaPaiId { get; set; } // Chave estrangeira opcional
+    public Categoria CategoriaPai { get; set; } // Propriedade de navegação
+    public List<Categoria> Subcategorias { get; set; } = new List<Categoria>();
+}
+Configuração no OnModelCreating:
+
+csharp
+Copiar código
+modelBuilder.Entity<Categoria>()
+    .HasOne(c => c.CategoriaPai)
+    .WithMany(c => c.Subcategorias)
+    .HasForeignKey(c => c.CategoriaPaiId);
+Dicas Adicionais
+Convenção vs. Configuração Explícita: O Entity Framework Core aplica convenções automáticas para identificar relacionamentos com base nos nomes das propriedades (Id, ClassNameId). Configure manualmente se precisar de algo mais específico.
+
+Carga Adiantada e Tardia: Use Include para carregar relacionamentos quando necessário:
+
+csharp
+Copiar código
+var categoria = db.Categorias
+    .Include(c => c.Produtos)
+    .FirstOrDefault(c => c.CategoriaId == 1);
+Migrations: Após configurar os relacionamentos, use Add-Migration e Update-Database para atualizar o banco.
+
+Guarde isso como uma referência rápida para criar e entender relacionamentos no EF Core! 😊

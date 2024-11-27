@@ -1,0 +1,24 @@
+Comandos
+Criar uma aplicação em
+ React
+npx create-react-app my-app --template typescript
+​
+Rodar a aplicação
+npm start
+​
+Instalar as dependências de um projeto em React
+npm i
+
+
+Passos para Adicionar Navegação
+Instalação do React Router
+Certifique-se de instalar a versão correta do react-router-dom:
+npm install react-router-dom
+​
+npm install @types/react-router-dom
+
+npm i --save-dev @types/react-dom (salva o codigo)
+
+
+Styled Components permite que você escreva estilos CSS em JavaScript e os associe diretamente aos seus componentes React:
+npm install styled-components @types/styled-components

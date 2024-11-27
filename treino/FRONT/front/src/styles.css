@@ -1,0 +1,133 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Fonte padrão da aplicação */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+  line-height: 1.6; /* Aumenta a legibilidade */
+  padding: 0 10px;
+}
+
+/* Estilos globais para containers */
+.container {
+  width: 100%; /* Ajustado para ocupar toda a largura disponível */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px;
+
+  /* Centralizando com flexbox */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Alinhamento horizontal */
+  min-height: 100vh; /* Garante que o conteúdo ocupe a altura total da tela */
+  justify-content: flex-start; /* Mantém o conteúdo no topo da tela */
+}
+
+/* Barra de navegação */
+nav {
+  background-color: #007bff;
+  padding: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+nav ul {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-around;
+  margin: 0;
+  padding: 0;
+}
+
+nav li {
+  margin: 0 10px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+nav a:hover {
+  background-color: #0056b3;
+}
+
+/* Estilos para links ativos */
+nav a.active {
+  background-color: #0056b3;
+  font-weight: bold;
+}
+
+/* Estilos de responsividade */
+@media (max-width: 768px) {
+  nav ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  nav li {
+    margin: 5px 0;
+  }
+}
+
+/* Estilos para tabelas e formulários */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+table, th, td {
+  border: 1px solid #ddd;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+}
+
+th {
+  background-color: #007bff;
+  color: white;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Estilos de inputs e selects */
+input, select, button {
+  padding: 8px 12px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 400px;
+}
+
+input:focus, select:focus, button:focus {
+  border-color: #007bff;
+  outline: none;
+}
